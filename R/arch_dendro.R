@@ -69,7 +69,7 @@
      }
     }
 
-  assign("my_dend", my_dend,.GlobalEnv)
+ assign("my_dend", my_dend,.GlobalEnv)
  print(paste("HCA using:", paste(noquote(colnames(df_chem)), collapse = ", ")))
  print(paste("Samples:", nrow(df_chem)))
 

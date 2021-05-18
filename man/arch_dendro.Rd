@@ -4,22 +4,22 @@
 \alias{arch_dendro}
 \title{Hierarchical Clustering Analysis.}
 \usage{
-arch_dendro(df_chem, nplot, printDendro = TRUE, df_raw, cex = 0.4)
+arch_dendro(df_chem, df_raw, nplot, printDendro = TRUE, cex = 0.4)
 }
 \arguments{
 \item{df_chem}{chemical data}
 
-\item{nplot}{number of plots to display}
-
-\item{printDendro}{when TRUE creates a pdf file}
-
 \item{df_raw}{categorical data and chemical data}
 
-\item{cex}{change font size}
+\item{nplot}{number of plots to display}
+
+\item{printDendro}{when TRUE creates a pdf file with the dendrogram}
+
+\item{cex}{font size}
 }
 \value{
 A dendrogram including \code{df_chem} and \code{df_raw} data.
 }
 \description{
-Plots hierarchical clustering of clr transformed data,using centroid algorithm and squared euclidean distance.
+Plots hierarchical clustering of clr transformed data using centroid algorithm and squared euclidean distance.
 }

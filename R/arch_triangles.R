@@ -116,7 +116,7 @@
     punts[,3]<-x$"CaO"
     punts[,c(1:3)]<-sweep(punts[,c(1:3)]/0.01,1,apply(punts[,c(1:3)],1,sum),FUN="/")
     
-    #La coordenada x es el valor de l’eix inferior mes el catet del triangle rectangle. La seva hipotenusa
+    #La coordenada x es el valor de leix inferior mes el catet del triangle rectangle. La seva hipotenusa
     #es el valor del eix dret i es multiplica pel sinus de 30 graus, que es 0.5
     punts[,4]<-punts[,1]+(punts[,2]/2)
     
@@ -231,11 +231,11 @@
     punts<-matrix(0,n,4)
     plot(c(0,100,50,0),c(0,0,100,0),xlab="",ylab="",axes=F,type="n",xlim=c(-20,120),ylim=c(-20,120))
     if (idioma==1) {
-      text(50,115,labels=expression(bold("Triangle ceràmic")),cex=1.4)
+      text(50,115,labels=expression(bold("Triangle ceramic")),cex=1.4)
       text(50,108,labels="(% de massa)",font=2)
     }
     if (idioma==2) {
-      text(50,115,labels=expression(bold("Triángulo cerámico")),cex=1.4)
+      text(50,115,labels=expression(bold("Triangulo ceramico")),cex=1.4)
       text(50,108,labels="(% de masa)",font=2)
     }
     if (idioma==3) {

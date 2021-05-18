@@ -37,8 +37,7 @@
   cat("%Maximum value : ", max(varprop), "\n")
   cat("%Variable : ", ord[p], "\n")
   
-  #lvar: less variying element
-  assign(".lvar", ord[p],.GlobalEnv)
+
   
   #return a the variation matrix
   return(varmat2)

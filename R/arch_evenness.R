@@ -72,7 +72,9 @@
   
   #vt/t.i values by order
   ord <- order(varprop)
-  colnames(df_chem)[ord[n_variables]] -> lvar #get the name of the less varying variable
+  
+  #get the name of the less varying variable (disable)
+  #colnames(df_chem)[ord[n_variables]] -> lvar 
   
   #set names to show after in the MVC plot
   names(varsum) <-  colnames(df_chem) #
@@ -297,8 +299,7 @@
   
   
   ####################################################################################################    
-  #Add the less varying element (lvar) to the global environment. 
-  assign("lvar", lvar,.GlobalEnv)
+ 
   
 }
 

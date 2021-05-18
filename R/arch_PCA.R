@@ -28,12 +28,12 @@
     varprop <- totvar/varsum      
     #vt/t.i values by order
     ord <- order(varprop)
-    colnames(df_chem)[ord[n_variables]] -> lvar #get the name of the variable
-    assign("lvar", lvar, .GlobalEnv)
+    colnames(df_chem)[ord[n_variables]] -> lvar #get the name of the less varying variable
+  
     
     
     df_chem <-  alr(df_chem,
-                    grep(x = colnames(df_chem), pattern = lvar)) #lvar is the less variable element in the dataset. Saved to the global environment previously by function "uniformity" 
+                    grep(x = colnames(df_chem), pattern = lvar)) #lvar is the less variable element in the dataset. 
   }
   
   

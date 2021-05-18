@@ -4,7 +4,6 @@ arch_scatter_matrix <- function(df_raw, vars, color, shape = color, title){
 #vars  
  
   ggthemes_data <- ggthemes::ggthemes_data #obtain theme
-  require("ggplot2")
   
   #Prepare the dataframe
   .df <- df_raw[c(vars)] #create a dataset only with the variables to plot (MnO, TiO2,...)

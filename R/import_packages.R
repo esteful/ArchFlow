@@ -10,10 +10,10 @@
 #' @importFrom compositions alr clr
 #' @importFrom dendextend set 
 #' @importFrom devEMF emf 
-
-
-
-
+#' @importFrom grDevices cm.colors dev.off heat.colors  palette pdf rainbow recordPlot replayPlot terrain.colors topo.colors
+#' @importFrom graphics legend lines par points text
+#' @importFrom stats as.dendrogram as.dist cor cutree density dist hclust mahalanobis order.dendrogram pf prcomp            
+#' @importFrom utils str
 NULL
 
 

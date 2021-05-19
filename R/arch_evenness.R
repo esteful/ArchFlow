@@ -1,10 +1,31 @@
+
+#' Chemical Evenness of the dataset.
+#'
+#' Provides chemical evenness plot, dendrogram of compositional variation matrix (MVC) and CoDa Dendrogram.
+#' Code developed from the original code from J.Buxeda i Garrigos.
+#' Based on the observations from Aitchison and Buxeda on compositional data.
+#'
+#'
+#' @param df_chem a dataframe only with chemical data
+
+#' @return Provides evenness plot, MVC dendrogram and CoDa Dendrogram based on \code{df_chem} data.
+
+#' @import compositions plotrix ggplot2 ggthemes devEMF
+#' @references Aitchison, J. (1986). The Statistical Analysis of Compositional Data. 
+#'     \url{https://doi.org/10.1007/978-94-009-4109-0}
+#'     Buxeda i Garrigós, J., & Kilikoglou, V. (2003). 
+#'     Total Variation as a Measure of Variability in Chemical Data Sets. Patterns and Process. 
+#'     A Festchrift in Honor to Dr. Edward Sayre, March, 185–198.
+#' @export
+
+
+
+
+
 "arch_evenness" <- function(df_chem)
   
 {
-  #It serves to asses the evenness of a dataset and outputs tree plots:
-  #Evenness plot, MVC dendrogram and CoDa Dendrogram. 
-  #Code developed from the original code from J.Buxeda i Garrigos.
-  #Based on the observations from Aitchison and Buxeda on compositional data.
+   
   #depends on following packages: compositions, plotrix, ggplot2, ggthemes and devEMF
   #depends on following functions: "entropia2" and "classifica"
   

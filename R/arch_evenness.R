@@ -160,7 +160,7 @@
     
     
     scale_x_discrete(limits = c(row.names(df_varsum)), #order elements from max to min varsum
-                    labels = names(varsum_ordered_vec)) + #include names 
+                    labels = chemLabels(names(varsum_ordered_vec))) + #include labels with subscripts using chemLabels function
     theme(axis.text.x = element_text(angle = 90)) + #rotate x labels
                     
     #use this to add padding between the last element and right part of the plot

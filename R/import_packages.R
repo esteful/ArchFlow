@@ -2,7 +2,7 @@
 #'
 #' @import archdata
 #' @import devtools
-#' @import dplyr RcmdrMisc
+#' @import dplyr 
 #' @import ggplot2 ggfortify scales
 #' @import stargazer   rmarkdown
 #' @import ggthemes
@@ -14,6 +14,7 @@
 #' @importFrom graphics legend lines par points text
 #' @importFrom stats as.dendrogram as.dist cutree density hclust mahalanobis order.dendrogram pf prcomp
 #' @importFrom utils str
+#' @importFrom RcmdrMisc numSummary
 NULL
 
 

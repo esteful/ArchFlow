@@ -6,19 +6,16 @@
 #' @return A vector with the labels as character including subscripts to display on graphics.
 #' @examples
 #' colnames_df_chem <- c("Fe2O3","SiO2", "Al2O3")
-#' chemLabels(colnames_df_chem)
+#' arch_chemLabels(colnames_df_chem)
 #' @export
 
 
 
 
-"chemLabels"<-
+"arch_chemLabels"<-
   function(labels_vector)
   {
-    # fa les chemLabels per un plot fent els subscripts. Han díestar una en cada fila
-    # fet per Jaume Buxeda i GarrigÛs
-    # versiÛ normalitzada a marÁ de 2015
-
+    
     #varsum_ordered_vec
     n<-length(labels_vector)
 

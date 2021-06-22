@@ -6,7 +6,9 @@
 #' @param signif Include sifnificant numbers FALSE other TRUE
 #' @param decimals How many decimals to include
 #' @param sig_digits How many significant numbers to include
-
+#'
+#' @importFrom RcmdrMisc numSummary
+#'
 #' @return A dataframe with following summary chemical compositions of a compositional group: number of individuals, means, SD and RSD .
 
 #' @export
@@ -18,9 +20,9 @@
      
   ##Obtain Mean, SD and RSD of the given dataframe
 
-    #calculate the values using numSummary 
+    #calculate the values using numSummary from RcmdrMisc
         sum <- 
-        numSummary(df_comp.group, 
+        RcmdrMisc::numSummary(df_comp.group, 
                    statistics=c("mean", "sd", "cv") #specify the stats to display
         )
       

@@ -30,9 +30,9 @@ arch_mahala <- function(group_list, test_sample, rm_vars =rm_vars){
 
 z = 1
 for (i in group_list){
-  print(names(group_list)[z])
+  base::print(names(group_list)[z])
   maha.prob(i[,-c(rm_vars)], test_sample[,-c(rm_vars)]) -> maha
-  print(maha$varmat)
+  base::print(maha$varmat)
   z = z+1#
 }
 }

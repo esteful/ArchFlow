@@ -11,7 +11,7 @@
 #' @param cex font size
 #'
 #' @importFrom dendextend set labels_colors
-#' @importFrom devEMF emf 
+#' @importFrom devEMF emf
 #' @importFrom grDevices replayPlot recordPlot
 #' @return A dendrogram including \code{df_chem} and \code{df_raw} data.
 #'

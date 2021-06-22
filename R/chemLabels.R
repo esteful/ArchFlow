@@ -1,13 +1,12 @@
-
-
-#' Chemical Labels with subcripts 
+#' Chemical Labels with subcripts.
 #'
 #' Add subscripts to the chemical labels. Modified from the original version of J. Buxeda i Garriges.
 #'
 #' @param labels_vector a vector containing the chemical names.
-#' @return A vector with the labels as character including subscripts to display on graphics. 
+#' @return A vector with the labels as character including subscripts to display on graphics.
 #' @examples
-#' chemLabels(colnames(df_chem))
+#' colnames_df_chem <- c("Fe2O3","SiO2", "Al2O3")
+#' chemLabels(colnames_df_chem)
 #' @export
 
 
@@ -18,13 +17,13 @@
   {
     # fa les chemLabels per un plot fent els subscripts. Han díestar una en cada fila
     # fet per Jaume Buxeda i GarrigÛs
-    # versiÛ normalitzada a marÁ de 2015   
-    
+    # versiÛ normalitzada a marÁ de 2015
+
     #varsum_ordered_vec
     n<-length(labels_vector)
-    
+
     chemLabels<-vector(length=n)
-    
+
     chemLabels[]<- labels_vector
 
     for(i in 1:n) {

@@ -1,9 +1,26 @@
-"arch_sum_table" <- function(x, signif = FALSE, decimals = 2, sig_digits = 3) {
+#' Summary Table. 
+#'
+#' Summary table including the following compositional data of a compositional groups: number of individuals, means, SD and RSD.  
+#'
+#' @param df_comp.group A dataframe with the compositional data of a given compositional group
+#' @param signif Include sifnificant numbers FALSE other TRUE
+#' @param decimals How many decimals to include
+#' @param sig_digits How many significant numbers to include
+
+#' @return A dataframe with following summary chemical compositions of a compositional group: number of individuals, means, SD and RSD .
+
+#' @export
+
+
+
+"arch_sum_table" <- function(df_comp.group, signif = FALSE, decimals = 2, sig_digits = 3) {
   
      
   ##Obtain Mean, SD and RSD of the given dataframe
-        sum <- #calculate the values using numSummary 
-        numSummary(x, 
+
+    #calculate the values using numSummary 
+        sum <- 
+        numSummary(df_comp.group, 
                    statistics=c("mean", "sd", "cv") #specify the stats to display
         )
       
@@ -13,7 +30,7 @@
   
   
       
-###Format number according to significant digits 
+##Format number according to significant digits 
       
       if (signif == FALSE){
         
@@ -78,9 +95,10 @@
   #For datasets containing both compounds (e.g. BaO) and elements (e.g. Hf), arrange the rows to list the compounds at the beginning of the table
         
       #Name of the compounds
+      izenak <- c()
       table$izenak  <-  row.names(table)  	#keep the row.names(because arrange(){dplyr} removes them) 
       
-      
+        what <- c()
         "element"  ->  table$what[nchar(row.names(table)) <= 2] #create a new column indicating which are elements (these contain two or less characters)
         "compound" ->  table$what[nchar(row.names(table)) > 2] #create a new column indicating which are compounds (these contain more than two characters)
     

@@ -1,25 +1,33 @@
+#' Ternary Diagrams. 
+#'
+#' Plots diagrams showing different ternary systems based on Fe2O3, MgO, CaO, Al2O3 and SiO2 compositions. 
+#'
+#' @param df_raw Dataframe with the chemical composition and the catagorical values 
+#' @param language 1 = Catala, 2 = Spanish, 3 = English
+#' @param ordenar 1 = to avoid ordering, 2 = order the dataframe according to the given factor (plot.category)
+#' @param c.palette 0 = black and white, 1 = default, 2 = rainbow, 3= heat.colors, 4 = terrain.colors, 5 = topo.colors, 6 = cm.colors
+#' @param plot.category The column with categories to be colored (1,2,3...)
+#' @param legend The column from which factors are colored (default = plot.category)
+#' @param rounded_circle 1 = circle around the points, 2 = only dots, without circle
 
-"arch_triangles"<-
+#' @return  Diagrams showing different ternary systems based on Fe2O3, MgO, CaO, Al2O3 and SiO2 compositions.
+#' @export
+
+
+"arch_triangles" <-
 
  #Attention! In windows uncomment the following codes "windows(record=T)"  
 
 
 
-  function(x,grup=1,idioma=3,ordenar=2, paleta = 2, llegenda=grup, encerclat=1)
+  function(df_raw, plot.category=1, language=3, ordenar=2, c.palette = 2, legend= plot.category, rounded_circle=1)
   {
-    # change the labels language language: 1- catala, 2- spanish, 3- english
-    # paleta: color palette, 0-arqub en blanc i negre, 1-arqub (default), 2-rainbow, 3-heat.colors, 4-terrain.colors, 5- topo.colors, 6- cm.colors
-    # ordenar:order, 1-no. When 2 the file is ordered according to the given factor of the group
-    # llegenda: legend, group as.factor or group as.character
-    # encerclat: 1-circle around the points, 2-only dots, without circle 
-    
-    
-    
+     
     #the column with groups
-    x[,grup]<-as.factor(x[,grup])
+    df_raw[,plot.category]<-as.factor(df_raw[,plot.category])
     
     #order
-    if (ordenar==2) {x<-x[ order(x[,grup]), ]}
+    if (ordenar==2) {df_raw<-df_raw[order(df_raw[,plot.category]), ]}
     
     #define color palettes  
     arqub<-vector(length=15)
@@ -27,52 +35,52 @@
     arqubBN<-vector(length=15)
     arqubBN<-c("white","grey90", "grey70", "grey50", "grey30", "grey10", "dodgerblue", "darkgoldenrod4", "chartreuse1",  "darkgreen", "indianred1", "blue", "darkmagenta", "maroon1", "aquamarine")
     
-    idllegenda<-vector(length=nlevels(x[,grup]))
+    idllegenda<-vector(length=nlevels(df_raw[,plot.category]))
     
-    for (ll in 1:nlevels(x[,grup])) {idllegenda[ll]<-ll}
-    if (llegenda!=grup) {
-      for (ll in 1:nlevels(x[,grup])) {
-        z<-which(x[,grup]==levels(x[,grup])[ll])
-        idllegenda[ll]<-x[z[1],llegenda]
+    for (ll in 1:nlevels(df_raw[,plot.category])) {idllegenda[ll]<-ll}
+    if (legend!=plot.category) {
+      for (ll in 1:nlevels(df_raw[,plot.category])) {
+        z<-which(df_raw[,plot.category]==levels(df_raw[,plot.category])[ll])
+        idllegenda[ll]<-df_raw[z[1],legend]
       }
     }
     
     
     #color palettes
-    if (paleta==2) {
-      colx<-c(rainbow(nlevels(x[,grup])))[as.factor(x[,grup])]
+    if (c.palette==2) {
+      colx<-c(rainbow(nlevels(df_raw[,plot.category])))[as.factor(df_raw[,plot.category])]
     }
-    if (paleta==3) {
-      colx<-c(heat.colors(nlevels(x[,grup])))[as.factor(x[,grup])]
+    if (c.palette==3) {
+      colx<-c(heat.colors(nlevels(df_raw[,plot.category])))[as.factor(df_raw[,plot.category])]
     }
-    if (paleta==4) {
-      colx<-c(terrain.colors(nlevels(x[,grup])))[as.factor(x[,grup])]
+    if (c.palette==4) {
+      colx<-c(terrain.colors(nlevels(df_raw[,plot.category])))[as.factor(df_raw[,plot.category])]
     }
-    if (paleta==5) {
-      colx<-c(topo.colors(nlevels(x[,grup])))[as.factor(x[,grup])]
+    if (c.palette==5) {
+      colx<-c(topo.colors(nlevels(df_raw[,plot.category])))[as.factor(df_raw[,plot.category])]
     }
-    if (paleta==6) {
-      colx<-c(cm.colors(nlevels(x[,grup])))[as.factor(x[,grup])]
+    if (c.palette==6) {
+      colx<-c(cm.colors(nlevels(df_raw[,plot.category])))[as.factor(df_raw[,plot.category])]
     }
     #windows(record=T)
     par(mar=c(0,0,0,0)+0.1,mgp=c(3,1,0))
-    n<-dim(x)[1]
+    n<-dim(df_raw)[1]
     punts<-matrix(0,n,4)
     
     #el primer triangle es el sialcap
     
     #text language
     plot(c(0,100,50,0),c(0,0,100,0),xlab="",ylab="",axes=F,type="n",xlim=c(-20,120),ylim=c(-20,120))
-    if (idioma==1) {
+    if (language==1) {
       text(50,115,labels=expression(bold("Sistema CaO-Al"["2"]*"O"["3"]*"-SiO"["2"])),cex=1.4)
       text(50,108,labels="(% de massa)",font=2)
     }
-    if (idioma==2) {
+    if (language==2) {
       text(50,115,labels=expression(bold("Sistema CaO-Al"["2"]*"O"["3"]*"-SiO"["2"])),cex=1.4)
       text(50,108,labels="(% de masa)",font=2)
     }
     
-    if (idioma==3) {
+    if (language==3) {
       text(50,115,labels=expression(bold("CaO-Al"["2"]*"O"["3"]*"-SiO"["2"]~"System")),cex=1.4)
       text(50,108,labels="(% by mass)",font=2)}
     
@@ -111,12 +119,12 @@
     
     
     
-    punts[,1]<-x$"Al2O3"
-    punts[,2]<-x$"SiO2" 
-    punts[,3]<-x$"CaO"
+    punts[,1]<-df_raw$"Al2O3"
+    punts[,2]<-df_raw$"SiO2" 
+    punts[,3]<-df_raw$"CaO"
     punts[,c(1:3)]<-sweep(punts[,c(1:3)]/0.01,1,apply(punts[,c(1:3)],1,sum),FUN="/")
     
-    #La coordenada x es el valor de leix inferior mes el catet del triangle rectangle. La seva hipotenusa
+    #La coordenada df_raw es el valor de leix inferior mes el catet del triangle rectangle. La seva hipotenusa
     #es el valor del eix dret i es multiplica pel sinus de 30 graus, que es 0.5
     punts[,4]<-punts[,1]+(punts[,2]/2)
     
@@ -125,92 +133,92 @@
     
     
     #color palettes first triangle
-    if (paleta==0) {
-      if (encerclat==2) {
+    if (c.palette==0) {
+      if (rounded_circle==2) {
         for (w in 1:n) {
-          points(punts[w,4],(punts[w,2]*0.8660254),pch=19,cex=0.8,col=arqubBN[x[w,grup]])
+          points(punts[w,4],(punts[w,2]*0.8660254),pch=19,cex=0.8,col=arqubBN[df_raw[w,plot.category]])
         }
-        legend(-15,91, bty="n",pch=19, legend = unique(x[,grup]), col = arqubBN[1:nlevels(x[,grup])])
+        legend(-15,91, bty="n",pch=19, legend = unique(df_raw[,plot.category]), col = arqubBN[1:nlevels(df_raw[,plot.category])])
       }
-      if (encerclat==1) {
+      if (rounded_circle==1) {
         for (w in 1:n) {
-          points(punts[w,4],(punts[w,2]*0.8660254),pch=19,cex=0.8,col=arqubBN[x[w,grup]])
+          points(punts[w,4],(punts[w,2]*0.8660254),pch=19,cex=0.8,col=arqubBN[df_raw[w,plot.category]])
           points(punts[w,4],(punts[w,2]*0.8660254),pch=21,cex=0.8)
         }
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = arqubBN[1:nlevels(x[,grup])])
-        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = arqubBN[1:nlevels(df_raw[,plot.category])])
+        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(df_raw[,plot.category])))
       }
     }
     
-    if (paleta==1) {
-      if (encerclat==2) {
+    if (c.palette==1) {
+      if (rounded_circle==2) {
         for (w in 1:n) {
-          points(punts[w,4],(punts[w,2]*0.8660254),pch=19,cex=0.8,col=arqub[x[w,grup]])
+          points(punts[w,4],(punts[w,2]*0.8660254),pch=19,cex=0.8,col=arqub[df_raw[w,plot.category]])
         }
-        legend(-15,91, bty="n",pch=19, legend = unique(x[,grup]), col = arqub[1:nlevels(x[,grup])])
+        legend(-15,91, bty="n",pch=19, legend = unique(df_raw[,plot.category]), col = arqub[1:nlevels(df_raw[,plot.category])])
       }
-      if (encerclat==1) {
+      if (rounded_circle==1) {
         for (w in 1:n) {
-          points(punts[w,4],(punts[w,2]*0.8660254),pch=19,cex=0.8,col=arqub[x[w,grup]])
+          points(punts[w,4],(punts[w,2]*0.8660254),pch=19,cex=0.8,col=arqub[df_raw[w,plot.category]])
           points(punts[w,4],(punts[w,2]*0.8660254),pch=21,cex=0.8)
         }
-        legend(-15,91, bty="n",pch=19, legend = unique(x[,grup]), col = arqub[1:nlevels(x[,grup])])
-        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend = unique(df_raw[,plot.category]), col = arqub[1:nlevels(df_raw[,plot.category])])
+        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(df_raw[,plot.category])))
       }
     }
-    if (paleta==2) {
-      if (encerclat==2) {
+    if (c.palette==2) {
+      if (rounded_circle==2) {
         points(punts[,4],(punts[,2]*0.8660254),pch=19,cex=0.8,col=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = rainbow(nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = rainbow(nlevels(df_raw[,plot.category])))
       }
-      if (encerclat==1) {
+      if (rounded_circle==1) {
         points(punts[,4],(punts[,2]*0.8660254),pch=21,cex=0.8,bg=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = rainbow(nlevels(x[,grup])))
-        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = rainbow(nlevels(df_raw[,plot.category])))
+        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(df_raw[,plot.category])))
       }
     }
-    if (paleta==3) {
-      if (encerclat==2) {
+    if (c.palette==3) {
+      if (rounded_circle==2) {
         points(punts[,4],(punts[,2]*0.8660254),pch=19,cex=0.8,col=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = heat.colors(nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = heat.colors(nlevels(df_raw[,plot.category])))
       }
-      if (encerclat==1) {
+      if (rounded_circle==1) {
         points(punts[,4],(punts[,2]*0.8660254),pch=21,cex=0.8,bg=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = heat.colors(nlevels(x[,grup])))
-        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = heat.colors(nlevels(df_raw[,plot.category])))
+        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(df_raw[,plot.category])))
       }
     }
-    if (paleta==4) {
-      if (encerclat==2) {
+    if (c.palette==4) {
+      if (rounded_circle==2) {
         points(punts[,4],(punts[,2]*0.8660254),pch=19,cex=0.8,col=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = terrain.colors(nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = terrain.colors(nlevels(df_raw[,plot.category])))
       }
-      if (encerclat==1) {
+      if (rounded_circle==1) {
         points(punts[,4],(punts[,2]*0.8660254),pch=21,cex=0.8,bg=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = terrain.colors(nlevels(x[,grup])))
-        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = terrain.colors(nlevels(df_raw[,plot.category])))
+        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(df_raw[,plot.category])))
       }
     }
-    if (paleta==5) {
-      if (encerclat==2) {
+    if (c.palette==5) {
+      if (rounded_circle==2) {
         points(punts[,4],(punts[,2]*0.8660254),pch=19,cex=0.8,col=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = topo.colors(nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = topo.colors(nlevels(df_raw[,plot.category])))
       }
-      if (encerclat==1) {
+      if (rounded_circle==1) {
         points(punts[,4],(punts[,2]*0.8660254),pch=21,cex=0.8,bg=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = topo.colors(nlevels(x[,grup])))
-        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = topo.colors(nlevels(df_raw[,plot.category])))
+        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(df_raw[,plot.category])))
       }
     }
-    if (paleta==6) {
-      if (encerclat==2) {
+    if (c.palette==6) {
+      if (rounded_circle==2) {
         points(punts[,4],(punts[,2]*0.8660254),pch=19,cex=0.8,col=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = cm.colors(nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = cm.colors(nlevels(df_raw[,plot.category])))
       }
-      if (encerclat==1) {
+      if (rounded_circle==1) {
         points(punts[,4],(punts[,2]*0.8660254),pch=21,cex=0.8,bg=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = cm.colors(nlevels(x[,grup])))
-        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = cm.colors(nlevels(df_raw[,plot.category])))
+        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(df_raw[,plot.category])))
       }
     }
     
@@ -227,18 +235,18 @@
     
     ##Second triangle 
     par(mar=c(0,0,0,0)+0.1,mgp=c(3,1,0))
-    n<-dim(x)[1]
+    n<-dim(df_raw)[1]
     punts<-matrix(0,n,4)
     plot(c(0,100,50,0),c(0,0,100,0),xlab="",ylab="",axes=F,type="n",xlim=c(-20,120),ylim=c(-20,120))
-    if (idioma==1) {
+    if (language==1) {
       text(50,115,labels=expression(bold("Triangle ceramic")),cex=1.4)
       text(50,108,labels="(% de massa)",font=2)
     }
-    if (idioma==2) {
+    if (language==2) {
       text(50,115,labels=expression(bold("Triangulo ceramico")),cex=1.4)
       text(50,108,labels="(% de masa)",font=2)
     }
-    if (idioma==3) {
+    if (language==3) {
       text(50,115,labels=expression(bold("Ceramic triangle")),cex=1.4)
       text(50,108,labels="(% by mass)",font=2)
     }
@@ -274,101 +282,101 @@
     
     
     
-    punts[,1]<-x[,"Al2O3"]
-    punts[,2]<-x[,"SiO2"] 
-    punts[,3]<-x[,"CaO"]+ x[,"MgO"]+ x[,"Fe2O3"]
+    punts[,1]<-df_raw[,"Al2O3"]
+    punts[,2]<-df_raw[,"SiO2"] 
+    punts[,3]<-df_raw[,"CaO"]+ df_raw[,"MgO"]+ df_raw[,"Fe2O3"]
     punts[,c(1:3)]<-sweep(punts[,c(1:3)]/0.01,1,apply(punts[,c(1:3)],1,sum),FUN="/")
     
     
     
-    #La coordenada x es el valor de l’eix inferior mes el catet del triangle rectangle. La seva hipotenusa
+    #La coordenada df_raw es el valor de l’eix inferior mes el catet del triangle rectangle. La seva hipotenusa
     #es el valor del eix dret i es multiplica pel sinus de 30 graus, que es 0.5
     punts[,4]<-punts[,1]+(punts[,2]/2)
-    if (paleta==0) {
-      if (encerclat==2) {
+    if (c.palette==0) {
+      if (rounded_circle==2) {
         for (w in 1:n) {
-          points(punts[w,4],(punts[w,2]*0.8660254),pch=19,cex=0.8,col=arqubBN[x[w,grup]])
+          points(punts[w,4],(punts[w,2]*0.8660254),pch=19,cex=0.8,col=arqubBN[df_raw[w,plot.category]])
         }
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = arqubBN[1:nlevels(x[,grup])])
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = arqubBN[1:nlevels(df_raw[,plot.category])])
       }
-      if (encerclat==1) {
+      if (rounded_circle==1) {
         for (w in 1:n) {
-          points(punts[w,4],(punts[w,2]*0.8660254),pch=19,cex=0.8,col=arqubBN[x[w,grup]])
+          points(punts[w,4],(punts[w,2]*0.8660254),pch=19,cex=0.8,col=arqubBN[df_raw[w,plot.category]])
           points(punts[w,4],(punts[w,2]*0.8660254),pch=21,cex=0.8)
         }
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = arqubBN[1:nlevels(x[,grup])])
-        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = arqubBN[1:nlevels(df_raw[,plot.category])])
+        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(df_raw[,plot.category])))
       }
     }
-    if (paleta==1) {
-      if (encerclat==2) {
+    if (c.palette==1) {
+      if (rounded_circle==2) {
         for (w in 1:n) {
-          points(punts[w,4],(punts[w,2]*0.8660254),pch=19,cex=0.8,col=arqub[x[w,grup]])
+          points(punts[w,4],(punts[w,2]*0.8660254),pch=19,cex=0.8,col=arqub[df_raw[w,plot.category]])
         }
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = arqub[1:nlevels(x[,grup])])
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = arqub[1:nlevels(df_raw[,plot.category])])
       }
-      if (encerclat==1) {
+      if (rounded_circle==1) {
         for (w in 1:n) {
-          points(punts[w,4],(punts[w,2]*0.8660254),pch=19,cex=0.8,col=arqub[x[w,grup]])
+          points(punts[w,4],(punts[w,2]*0.8660254),pch=19,cex=0.8,col=arqub[df_raw[w,plot.category]])
           points(punts[w,4],(punts[w,2]*0.8660254),pch=21,cex=0.8)
         }
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = arqub[1:nlevels(x[,grup])])
-        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = arqub[1:nlevels(df_raw[,plot.category])])
+        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(df_raw[,plot.category])))
       }
     }
-    if (paleta==2) {
-      if (encerclat==2) {
+    if (c.palette==2) {
+      if (rounded_circle==2) {
         points(punts[,4],(punts[,2]*0.8660254),pch=19,cex=0.8,col=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = rainbow(nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = rainbow(nlevels(df_raw[,plot.category])))
       }
-      if (encerclat==1) {
+      if (rounded_circle==1) {
         points(punts[,4],(punts[,2]*0.8660254),pch=21,cex=0.8,bg=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = rainbow(nlevels(x[,grup])))
-        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = rainbow(nlevels(df_raw[,plot.category])))
+        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(df_raw[,plot.category])))
       }
     }
-    if (paleta==3) {
-      if (encerclat==2) {
+    if (c.palette==3) {
+      if (rounded_circle==2) {
         points(punts[,4],(punts[,2]*0.8660254),pch=19,cex=0.8,col=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = heat.colors(nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = heat.colors(nlevels(df_raw[,plot.category])))
       }
-      if (encerclat==1) {
+      if (rounded_circle==1) {
         points(punts[,4],(punts[,2]*0.8660254),pch=21,cex=0.8,bg=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = heat.colors(nlevels(x[,grup])))
-        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = heat.colors(nlevels(df_raw[,plot.category])))
+        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(df_raw[,plot.category])))
       }
     }
-    if (paleta==4) {
-      if (encerclat==2) {
+    if (c.palette==4) {
+      if (rounded_circle==2) {
         points(punts[,4],(punts[,2]*0.8660254),pch=19,cex=0.8,col=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = terrain.colors(nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = terrain.colors(nlevels(df_raw[,plot.category])))
       }
-      if (encerclat==1) {
+      if (rounded_circle==1) {
         points(punts[,4],(punts[,2]*0.8660254),pch=21,cex=0.8,bg=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = terrain.colors(nlevels(x[,grup])))
-        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = terrain.colors(nlevels(df_raw[,plot.category])))
+        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(df_raw[,plot.category])))
       }
     }
-    if (paleta==5) {
-      if (encerclat==2) {
+    if (c.palette==5) {
+      if (rounded_circle==2) {
         points(punts[,4],(punts[,2]*0.8660254),pch=19,cex=0.8,col=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = topo.colors(nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = topo.colors(nlevels(df_raw[,plot.category])))
       }
-      if (encerclat==1) {
+      if (rounded_circle==1) {
         points(punts[,4],(punts[,2]*0.8660254),pch=21,cex=0.8,bg=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = topo.colors(nlevels(x[,grup])))
-        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = topo.colors(nlevels(df_raw[,plot.category])))
+        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(df_raw[,plot.category])))
       }
     }
-    if (paleta==6) {
-      if (encerclat==2) {
+    if (c.palette==6) {
+      if (rounded_circle==2) {
         points(punts[,4],(punts[,2]*0.8660254),pch=19,cex=0.8,col=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = cm.colors(nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = cm.colors(nlevels(df_raw[,plot.category])))
       }
-      if (encerclat==1) {
+      if (rounded_circle==1) {
         points(punts[,4],(punts[,2]*0.8660254),pch=21,cex=0.8,bg=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = cm.colors(nlevels(x[,grup])))
-        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = cm.colors(nlevels(df_raw[,plot.category])))
+        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(df_raw[,plot.category])))
       }
     }
     xxx<-recordPlot()
@@ -383,21 +391,21 @@
     #third trianle 
     
     par(mar=c(0,0,0,0)+0.1,mgp=c(3,1,0))
-    n<-dim(x)[1]
+    n<-dim(df_raw)[1]
     punts<-matrix(0,n,4)
     plot(c(0,100,50,0),c(0,0,100,0),xlab="",ylab="",axes=F,type="n",xlim=c(-20,120),ylim=c(-20,120))
     
     
-    if (idioma==1) {
+    if (language==1) {
       text(50,115,labels=expression(bold("Sistema CaO-MgO-SiO"["2"])),cex=1.4)
       text(50,108,labels="(% de massa)",font=2)
     }
-    if (idioma==2) {
+    if (language==2) {
       text(50,115,labels=expression(bold("Sistema CaO-MgO-SiO"["2"])),cex=1.4)
       text(50,108,labels="(% de masa)",font=2)
     }
     
-    if (idioma==3) {
+    if (language==3) {
       text(50,115,labels=expression(bold("CaO-MgO-SiO"["2"]~"System")),cex=1.4)
       text(50,108,labels="(% by mass)",font=2)
     }
@@ -446,116 +454,118 @@
     #etiquetes de les fases
     text(c(50,27.2,46.9,69.4,35.4,77.6,44.96),c(89.2006162, 41.6,45.2, 49.8, 37,35,31), labels=c("Qz","Wo","Di","En","Ak","Fo","Mtc"),cex=1,font=2)
     
-    punts[,1]<-x[,"MgO"]
-    punts[,2]<-x[,"SiO2"] 
-    punts[,3]<-x[,"CaO"]
+    punts[,1]<-df_raw[,"MgO"]
+    punts[,2]<-df_raw[,"SiO2"] 
+    punts[,3]<-df_raw[,"CaO"]
     punts[,c(1:3)]<-sweep(punts[,c(1:3)]/0.01,1,apply(punts[,c(1:3)],1,sum),FUN="/")
     
-    #La coordenada x es el valor de l’eix inferior mes el catet del triangle rectangle. La seva hipotenusa
+    #La coordenada df_raw es el valor de l’eix inferior mes el catet del triangle rectangle. La seva hipotenusa
     #es el valor del eix dret i es multiplica pel sinus de 30 graus, que es 0.5
     punts[,4]<-punts[,1]+(punts[,2]/2)
     
     
     ###different color palettes
-    if (paleta==0) {
-      if (encerclat==2) {
+    if (c.palette==0) {
+      if (rounded_circle==2) {
         for (w in 1:n) {
-          points(punts[w,4],(punts[w,2]*0.8660254),pch=19,cex=0.8,col=arqubBN[x[w,grup]])
+          points(punts[w,4],(punts[w,2]*0.8660254),pch=19,cex=0.8,col=arqubBN[df_raw[w,plot.category]])
         }
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = arqubBN[1:nlevels(x[,grup])])
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = arqubBN[1:nlevels(df_raw[,plot.category])])
       }
-      if (encerclat==1) {
+      if (rounded_circle==1) {
         for (w in 1:n) {
-          points(punts[w,4],(punts[w,2]*0.8660254),pch=19,cex=0.8,col=arqubBN[x[w,grup]])
+          points(punts[w,4],(punts[w,2]*0.8660254),pch=19,cex=0.8,col=arqubBN[df_raw[w,plot.category]])
           points(punts[w,4],(punts[w,2]*0.8660254),pch=21,cex=0.8)
         }
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = arqubBN[1:nlevels(x[,grup])])
-        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = arqubBN[1:nlevels(df_raw[,plot.category])])
+        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(df_raw[,plot.category])))
       }
     }
-    if (paleta==1) {
-      if (encerclat==2) {
+    if (c.palette==1) {
+      if (rounded_circle==2) {
         for (w in 1:n) {
-          points(punts[w,4],(punts[w,2]*0.8660254),pch=19,cex=0.8,col=arqub[x[w,grup]])
+          points(punts[w,4],(punts[w,2]*0.8660254),pch=19,cex=0.8,col=arqub[df_raw[w,plot.category]])
         }
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = arqub[1:nlevels(x[,grup])])
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = arqub[1:nlevels(df_raw[,plot.category])])
       }
-      if (encerclat==1) {
+      if (rounded_circle==1) {
         for (w in 1:n) {
-          points(punts[w,4],(punts[w,2]*0.8660254),pch=19,cex=0.8,col=arqub[x[w,grup]])
+          points(punts[w,4],(punts[w,2]*0.8660254),pch=19,cex=0.8,col=arqub[df_raw[w,plot.category]])
           points(punts[w,4],(punts[w,2]*0.8660254),pch=21,cex=0.8)
         }
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = arqub[1:nlevels(x[,grup])])
-        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = arqub[1:nlevels(df_raw[,plot.category])])
+        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(df_raw[,plot.category])))
       }
     }
-    if (paleta==2) {
-      if (encerclat==2) {
+    if (c.palette==2) {
+      if (rounded_circle==2) {
         points(punts[,4],(punts[,2]*0.8660254),pch=19,cex=0.8,col=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = rainbow(nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = rainbow(nlevels(df_raw[,plot.category])))
       }
-      if (encerclat==1) {
+      if (rounded_circle==1) {
         points(punts[,4],(punts[,2]*0.8660254),pch=21,cex=0.8,bg=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = rainbow(nlevels(x[,grup])))
-        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = rainbow(nlevels(df_raw[,plot.category])))
+        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(df_raw[,plot.category])))
       }
     }
-    if (paleta==3) {
-      if (encerclat==2) {
+    if (c.palette==3) {
+      if (rounded_circle==2) {
         points(punts[,4],(punts[,2]*0.8660254),pch=19,cex=0.8,col=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = heat.colors(nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = heat.colors(nlevels(df_raw[,plot.category])))
       }
-      if (encerclat==1) {
+      if (rounded_circle==1) {
         points(punts[,4],(punts[,2]*0.8660254),pch=21,cex=0.8,bg=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = heat.colors(nlevels(x[,grup])))
-        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = heat.colors(nlevels(df_raw[,plot.category])))
+        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(df_raw[,plot.category])))
       }
     }
-    if (paleta==4) {
-      if (encerclat==2) {
+    if (c.palette==4) {
+      if (rounded_circle==2) {
         points(punts[,4],(punts[,2]*0.8660254),pch=19,cex=0.8,col=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = terrain.colors(nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = terrain.colors(nlevels(df_raw[,plot.category])))
       }
-      if (encerclat==1) {
+      if (rounded_circle==1) {
         points(punts[,4],(punts[,2]*0.8660254),pch=21,cex=0.8,bg=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = terrain.colors(nlevels(x[,grup])))
-        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = terrain.colors(nlevels(df_raw[,plot.category])))
+        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(df_raw[,plot.category])))
       }
     }
-    if (paleta==5) {
-      if (encerclat==2) {
+    if (c.palette==5) {
+      if (rounded_circle==2) {
         points(punts[,4],(punts[,2]*0.8660254),pch=19,cex=0.8,col=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = topo.colors(nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = topo.colors(nlevels(df_raw[,plot.category])))
       }
-      if (encerclat==1) {
+      if (rounded_circle==1) {
         points(punts[,4],(punts[,2]*0.8660254),pch=21,cex=0.8,bg=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = topo.colors(nlevels(x[,grup])))
-        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = topo.colors(nlevels(df_raw[,plot.category])))
+        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(df_raw[,plot.category])))
       }
     }
-    if (paleta==6) {
-      if (encerclat==2) {
+    if (c.palette==6) {
+      if (rounded_circle==2) {
         points(punts[,4],(punts[,2]*0.8660254),pch=19,cex=0.8,col=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = cm.colors(nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = cm.colors(nlevels(df_raw[,plot.category])))
       }
-      if (encerclat==1) {
+      if (rounded_circle==1) {
         points(punts[,4],(punts[,2]*0.8660254),pch=21,cex=0.8,bg=colx)
-        legend(-15,91, bty="n",pch=19, legend =  unique(x[,grup]), col = cm.colors(nlevels(x[,grup])))
-        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(x[,grup])))
+        legend(-15,91, bty="n",pch=19, legend =  unique(df_raw[,plot.category]), col = cm.colors(nlevels(df_raw[,plot.category])))
+        legend(-15,91, bty="n",pch=21, legend = rep("",nlevels(df_raw[,plot.category])))
       }
     }
+
+
     
     ###output plots 
-    xxx<-recordPlot()
-    emf("triangle3.emf")
-    replayPlot(xxx)
-    dev.off()
-    pdf("triangle3.pdf")
-    replayPlot(xxx)
-    dev.off()
-    #fi i posem els marges per defecte
-    par(mar=c(5,4,4,2)+0.1,mgp=c(3,1,0))
-    palette("default")
+      xxx<-recordPlot()
+      emf("triangle3.emf")
+      replayPlot(xxx)
+      dev.off()
+      pdf("triangle3.pdf")
+      replayPlot(xxx)
+      dev.off()
+      #fi i posem els marges per defecte
+      par(mar=c(5,4,4,2)+0.1,mgp=c(3,1,0))
+      palette("default")
     
     
   }

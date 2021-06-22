@@ -1,4 +1,20 @@
-  arch_latex<- function(group_list, landscape = FALSE, MVC = FALSEM, rm_vars= rm_vars){
+  
+#' LaTex Formatted Variation Matrix. 
+#' Provides the compositions of previously defined compositional groups in LaTex format ready to create a pdf. 
+#'
+#' @param group_list A list of dataframes with each compositional group.
+#' @param landscape turn TRUE to create a landscape mode table.
+#' @param MVC TRUE to include matrix of compositional variation 
+#' @param rm_vars include variables that are not to be included in the table. 
+
+
+
+#' @return LaTex format tables with the compositions of each compositional group. 
+#' @export
+
+
+
+arch_latex <- function(group_list, landscape = FALSE, MVC = FALSE, rm_vars= rm_vars){
     
     cat(paste("%Copy and paste this code in the Latex File", "\n\n"))  
     j <- 1

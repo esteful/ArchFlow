@@ -1,3 +1,25 @@
+#' Hotteling test based on Mahalanobis distances. 
+#'
+#' Performs Hotteling test based on Mahalanobis distances to asses to memebership probabilities. 
+#' The variables should be always n+2, where n is the number of individuals of the smallest compositional group. 
+
+
+
+#' @param group_list List of dataframes corresponding to known compositional groups. 
+#' @param test_sample A individual which is to be tested 
+#' @param rm_vars Variables that are to be excluded in the analysis. 
+
+
+#' @return Performs Hotteling test based on Mahalanobis distances. Probabilities of memebership to a certain group. 
+
+#' @export
+
+
+
+
+
+
+
 
 arch_mahala <- function(group_list, test_sample, rm_vars =rm_vars){
 

@@ -1,6 +1,20 @@
+#' Pie plot.
+#'
+#' Provides a pie plot in facet_grid mode to show different variables.  
+#'
+#' @param pies Categories to include of pie charts (a column of the dataframe with factors)
+#' @param cols Categories to include in columns (a column of the dataframe with factors)
+#' @param rows Categories to include in rows (a column of the dataframe with factors)
+
+#' @return A pie plot in facet grid mode to show different variables. 
+
+#' @export
+
+
+
+
  arch_pie_plot <- function(pies,cols,rows){
     
-    y <-df_raw[,1:3]
     
     .df <- data.frame(y = pies , #pie charts
                       s = rows, #rows 

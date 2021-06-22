@@ -1,10 +1,29 @@
+#' Scatter Matrix. 
+#'
+#' Provides a scatter matrix showing the correlations among different elements of the dataset. 
+#'
+#' @param df_raw Dataframe with the chemical composition and the catagorical values
+#' @param vars Variables to use in the scatter matrix (chemical elements or compounds)
+#' @param color Categorical values to be distinguided by colors (e.g. "Region", "Kiln", "Provenance"...) 
+#' @param shape Categorical values to be distinguided by shapes (e.g. "Region", "Kiln", "Provenance"...) 
+#' @param title The title to be displayed 
+#' @return A facet grid scatter matrix showing correlations among selected variables. 
+#' @export
+
 arch_scatter_matrix <- function(df_raw, vars, color, shape = color, title){
   
 ##based on ggplot and ggthems   
-#vars  
+#vars 
+#@example arch_scatter_matrix(df_raw= df_alr, vars, color = "Region", shape = "Kiln", title= "RBPottery")
+
  
   ggthemes_data <- ggthemes::ggthemes_data #obtain theme
   
+  x <- c()
+  y <- c()
+  z <- c()
+  w <- c()
+
   #Prepare the dataframe
   .df <- df_raw[c(vars)] #create a dataset only with the variables to plot (MnO, TiO2,...)
   .grid <- expand.grid(x = 1:ncol(.df), y = 1:ncol(.df)) #create a df with x and y 
@@ -40,7 +59,8 @@ arch_scatter_matrix <- function(df_raw, vars, color, shape = color, title){
   .densities$w <- NA
   
   
-  .plot <- ggplot(.all, aes(x = x, y = y, colour = z, shape = w)) + #here are set the color (z) categories and the shape (w)
+  plot <- 
+   ggplot2::ggplot(.all, aes(x = x, y = y, colour = z, shape = w)) + #here are set the color (z) categories and the shape (w)
     facet_grid(xvar ~ yvar, scales = "free") + 
     geom_point(aes(colour=z), na.rm = TRUE, alpha=0.8)+
     geom_point(size=0.5) + ##change the point size here 
@@ -55,9 +75,9 @@ arch_scatter_matrix <- function(df_raw, vars, color, shape = color, title){
     ggthemes::theme_base(base_size = 10, base_family = "sans") + 
     theme(legend.position = "right") 
   
-  print(.plot)
+    plot(plot)
   
-  ggsave(filename = "scatter_plot.pdf", plot = .plot)
+    ggplot2::ggsave(filename = "scatter_plot.pdf", plot = plot)
   
   rm(ggthemes_data, .grid, .all, .densities)
 }

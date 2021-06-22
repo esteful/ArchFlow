@@ -9,9 +9,12 @@
 #' @param printDendro when TRUE creates a pdf file with the dendrogram
 #' @param nplot number of plots to display
 #' @param cex font size
-
+#'
+#' @importFrom dendextend set labels_colors
+#' @importFrom devEMF emf 
+#' @importFrom grDevices replayPlot recordPlot
 #' @return A dendrogram including \code{df_chem} and \code{df_raw} data.
-
+#'
 #' @export
 
 
@@ -26,11 +29,8 @@
 
 # perform the cluster analysis
 
-  HClust <-  hclust(d = dist(x.clr)^2, method = "cen")
+  HClust <-  stats::hclust(d = dist(x.clr)^2, method = "cen")
 
-#save in global environment for using cut tree
-
-  assign(".HClust", HClust,.GlobalEnv)
 
 #save the dendrogram
 
@@ -41,11 +41,11 @@
   for (i in nplot)
     {
       #plot options
-        my_dend <- set(my_dend, "labels_cex", cex) #labels text size
+        my_dend <- dendextend::set(my_dend, "labels_cex", cex) #labels text size
         par(mar = c(2,2,2,2)) #set legend scale
 
      #add colors to labels
-        labels_colors(my_dend) <-rainbow(nlevels(as.factor(df_raw[,i])))[as.factor(df_raw[,i])][order.dendrogram(my_dend)]
+        dendextend::labels_colors(my_dend) <-rainbow(nlevels(as.factor(df_raw[,i])))[as.factor(df_raw[,i])][order.dendrogram(my_dend)]
 
         #MORE COLOR PALETTES: heat.colors, rainbow, terrain.colors, cm.colors, topo.colors
 
@@ -57,20 +57,20 @@
 
 
      #save the plot
-        dendro <-recordPlot(my_dend)
+      dendro <- grDevices::recordPlot(my_dend)
 
      if (printDendro == TRUE){
-       emf("Dendrogram.emf")
-       replayPlot(dendro)
+       devEMF::emf("Dendrogram.emf")
+       grDevices::replayPlot(dendro)
        dev.off()
        pdf("Dendrogram.pdf")
-       replayPlot(dendro)
+       grDevices::replayPlot(dendro)
        dev.off()
      }
     }
 
- assign("my_dend", my_dend,.GlobalEnv)
- print(paste("HCA using:", paste(noquote(colnames(df_chem)), collapse = ", ")))
- print(paste("Samples:", nrow(df_chem)))
+ #assign("my_dend", my_dend,.GlobalEnv)
+ #print(paste("HCA using:", paste(noquote(colnames(df_chem)), collapse = ", ")))
+ #print(paste("Samples:", nrow(df_chem)))
 
 }

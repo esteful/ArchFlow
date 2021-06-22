@@ -1,8 +1,33 @@
 
+#' Principal Component Analysis.
+#'
+#' Plots Principal Component Analysis of alr transformed data.
+#'
+#' @param df_chem chemical data
+#' @param df_raw categorical data and chemical data
+#' @param alr when TRUE applies additive log ratio transformations (default = TRUE)
+#' @param printPCA when TRUE creates a pdf file with the PCA
+#' @param nplot number of plots to display
+#' @param labels turn TRUE to display labels
+#' @param shape_cat_number from 1 to 15, the number of categories to display with
+#' @param frame = TRUE,
+#' @param PCx = 1,
+#' @param PCy =2
+#' @param nshapes Chose from 1-25 shapes to display all equally, default= 10. 
+#' @param label.size = 3
+
+#'
+#' @return A principal component analysis plot.
+
+#' @export
+
+
+
+
 #' @importFrom compositions var
 #' @export
 #'
-"arch_PCA" <- function(df_chem, df_raw, lvar=lvar, nplot=nplot, alr = TRUE, printPCA = FALSE, labels= FALSE, shape_cat_number = 15, frame = TRUE, PCx = 1, PCy =2, nshapes=10, label.size = 3){
+"arch_PCA" <- function(df_chem, df_raw, nplot=nplot, alr = TRUE, printPCA = FALSE, labels= FALSE, shape_cat_number = 15, frame = TRUE, PCx = 1, PCy =2, nshapes=10, label.size = 3){
 
   #Plot PCAs on alr transformed data (if desired) showing colored categories according to "nplot" given number
 
@@ -78,7 +103,7 @@ for (i in nplot){
                          frame.type = "norm")   # if "norm" is removed the shaope of the frame is geometrical
 
 
-                 + scale_shape_manual(values=c(1:nshapes)) # or chose from 1-25 shapes to display all equally, 15 by default
+                 + scale_shape_manual(values=c(1:nshapes)) # or chose from 1-25 shapes to display all equally, 10 by default
                  + ggtitle(label = "PCA")
                  + theme(plot.title = element_text(hjust = 0.5))
                  + labs(caption= paste("PCA using:", paste(noquote(colnames(df_chem)), collapse = ", ")))

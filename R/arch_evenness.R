@@ -1,4 +1,3 @@
-
 #' Chemical Evenness of the dataset.
 #'
 #' Provides chemical evenness plot, dendrogram of compositional variation matrix (MVC) and CoDa Dendrogram.
@@ -7,10 +6,12 @@
 #'
 #'
 #' @param df_chem a dataframe only with chemical data
-
+#'
 #' @return Provides evenness plot, MVC dendrogram and CoDa Dendrogram based on \code{df_chem} data.
-
-#' @import compositions plotrix ggplot2 ggthemes devEMF
+#'
+#' @import compositions
+#' @import ggplot2 ggthemes devEMF
+#'
 #' @references Aitchison, J. (1986). The Statistical Analysis of Compositional Data. 
 #'     \url{https://doi.org/10.1007/978-94-009-4109-0}
 #'     Buxeda i Garrigós, J., & Kilikoglou, V. (2003). 
@@ -25,20 +26,6 @@
 "arch_evenness" <- function(df_chem)
   
 {
-   
-  #depends on following packages: compositions, plotrix, ggplot2, ggthemes and devEMF
-  #depends on following functions: "entropia2" and "classifica"
-  
-  #Aitchison, J. (1986). The Statistical Analysis of Compositional Data. 
-  #In The Statistical Analysis of Compositional Data. 
-  #https://doi.org/10.1007/978-94-009-4109-0
-  
-  
-  #Buxeda i Garrigós, J., & Kilikoglou, V. (2003). 
-  #Total Variation as a Measure of Variability in Chemical Data Sets. Patterns and Process. 
-  #A Festchrift in Honor to Dr. Edward Sayre, March, 185–198.
-  
-  
   # number of columns
   n_variables <- ncol(df_chem) 
   
@@ -74,7 +61,7 @@
   
   for(i in 1:n_variables) {
     varcor[i] <- 
-      cor(varmat[-c(i),i], varsum[-i])
+      compositions::cor(varmat[-c(i),i], varsum[-i])
   }
   
   #add values to the empty matrix 
@@ -134,7 +121,8 @@
   tMVC<-as.data.frame(tMVC[ordered_varsum_vec,])  #save the matrix ordered as dataframe
   
   
-  #MVC plot (uses external function called "entropia" used)
+  #MVC plot 
+
   for(i in 1:(n_variables)) {
     mat[i,1] <- tMVC[i, n_varplus1]
   }
@@ -142,14 +130,19 @@
   mat[n_varplus1,1] <- MVC[n_varplus1+3,1]  #total variation (vt)
   dimnames(mat)[[1]]<-c(dimnames(tMVC)[[1]], "vt")
   
-  tmat<-t(mat[c(1:n_varplus1-1),])
-  tmatentro<-entropia02(tmat-mat[n_varplus1,1]) #entropia function
   
+  #calculate h2, h2p using arch_entropy function
+  tmat <- t(mat[c(1:n_varplus1-1),])
+  tmatentro <- arch_entropy(tmat-mat[n_varplus1,1]) #entropia function
   
-  #calculate values 
-  h2<-round(tmatentro$Entropy[1,n_varplus1],dig=2)
-  h2p<- round(tmatentro$Entropy[1,n_varplus1+1]*100,dig=2)
-  vt<-round(mat[n_varplus1,1],dig=2)
+    #information entropy
+    h2 <- round(tmatentro$Entropy[1,n_varplus1],digits=2)
+
+    #percentage of information entropy over the maximum possible
+    h2p <- round(tmatentro$Entropy[1,n_varplus1+1]*100,digits=2)
+
+  #total variation
+  vt<-round(mat[n_varplus1,1],digits=2)
   
   #add doted lines 
   cuts=c(0.3, 0.5, 0.9) #vertical doted axis 
@@ -167,7 +160,7 @@
   ##CREATE THE MVC PLOT
   
   MVC_plot <- 
-    ggplot(df_varsum, 
+    ggplot2::ggplot(df_varsum, 
            aes(x=row.names(df_varsum),  #especify data to plot x axis
                y=varsum_ordered_vec)) +  #especify data to plot y axis
     geom_line(aes(group=1)) + #add the line between dots
@@ -218,24 +211,43 @@
     ##Add data and dotted lines to the MVC plot
     
     #0.3 line + text   
-      annotate("segment", x = matrix3[1]+0.5, xend = matrix3[1]+0.5, y = 0.3, yend = max(varsum_ordered_vec)/1.5, 
-               linetype="dashed", colour = "black", size =0.3) +
+      annotate("segment", x = matrix3[1]+0.5, 
+                          xend = matrix3[1]+0.5, 
+                          y = 0.3, 
+                          yend = max(varsum_ordered_vec)/1.5, 
+                          linetype="dashed", 
+                          colour = "black", 
+                          size =0.3) +
       annotate("text", x = matrix3[1]+0.5, y = 0, label = "0.3")+ 
      
     #0.5 line + text  
-      annotate("segment", x = matrix3[2]+0.5, xend = matrix3[2]+0.5, y = 0.3, yend = max(varsum_ordered_vec)/1,5, 
-               linetype="dashed", colour = "black", size =0.3) +
+      annotate("segment", x = matrix3[2]+0.5, 
+                          xend = matrix3[2]+0.5, 
+                          y = 0.3, 
+                          yend = max(varsum_ordered_vec)/1,5, 
+                          linetype="dashed", 
+                          colour = "black", 
+                          size =0.3) +
       annotate("text", x = matrix3[2]+0.5, y = 0, label = "0.5") +
 
     
     #0.9 line + text  
-      annotate("segment", x = matrix3[3]+0.5, xend = matrix3[3]+0.5, y = 0.3, yend = max(varsum_ordered_vec)/1.5, 
-               linetype="dashed", colour = "black", size =0.3) +
+      annotate("segment", x = matrix3[3]+0.5, 
+                          xend = matrix3[3]+0.5, 
+                          y = 0.3, 
+                          yend = max(varsum_ordered_vec)/1.5, 
+                          linetype="dashed",
+                          colour = "black", 
+                          size =0.3) +
       annotate("text", x = matrix3[3]+0.5, y = 0, label = "0.9") +
     
     # horizontal line vt
-      annotate("segment", x = 0, xend =dim(df_varsum)[1], y = min(df_varsum), yend = min(df_varsum), 
-               linetype="dashed", colour = "black", size =0.3) 
+      annotate("segment", 
+                x = 0, 
+                xend =dim(df_varsum)[1], 
+                y = min(df_varsum), 
+                yend = min(df_varsum), 
+                linetype="dashed", colour = "black", size =0.3) 
     
   
   #save the plot
@@ -283,26 +295,18 @@
   rang.boxplot=c(-4,4) #used in codadendro
   
   
-  classi<-classifica(dendroMVC) #classifica function is external
-  Signary<-as.data.frame(t(classi$signary))
+  classi<- arch_classify(dendroMVC) #arch_clasify function is external
+  
+  Signary<- as.data.frame(t(classi$signary))
   
   dimnames(Signary)[[1]]<-dimnames(df_chem)[[2]]
-  
-  CoDaDendrogram(
-    acomp(df_chem),
-    signary=Signary, 
-    border="red4", 
-    col="goldenrod3", 
-    type="boxplot", 
-    box.space=mida.boxplot, 
-    range=rang.boxplot)
-  
-  
+  compositions::CoDaDendrogram(compositions::acomp(df_chem),signary=Signary,border="red4",col="goldenrod3",type="boxplot",box.space=mida.boxplot,range=rang.boxplot)
+    
   
   
   #save the plot of CoDaDendrogram
-  CodaDendroPlot<-recordPlot()
-  MVCdendro <-recordPlot(CodaDendroPlot)
+  CodaDendroPlot<- recordPlot()
+  MVCdendro <- recordPlot(CodaDendroPlot)
   pdf("CoDaDendrogram.pdf")
   replayPlot(CodaDendroPlot)
   dev.off()

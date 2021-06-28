@@ -18,9 +18,9 @@ Code developed from the original code from J.Buxeda i Garrigos.
 Based on the observations from Aitchison and Buxeda on compositional data.
 }
 \references{
-Aitchison, J. (1986). The Statistical Analysis of Compositional Data. 
+Aitchison, J. (1986). The Statistical Analysis of Compositional Data.
     \url{https://doi.org/10.1007/978-94-009-4109-0}
-    Buxeda i Garrigós, J., & Kilikoglou, V. (2003). 
-    Total Variation as a Measure of Variability in Chemical Data Sets. Patterns and Process. 
+    Buxeda i Garrigós, J., & Kilikoglou, V. (2003).
+    Total Variation as a Measure of Variability in Chemical Data Sets. Patterns and Process.
     A Festchrift in Honor to Dr. Edward Sayre, March, 185–198.
 }

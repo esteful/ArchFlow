@@ -13,7 +13,7 @@ arch_entropy(df_chem)
 Provides two dataframes based on \code{df_chem}: Entropy and Probability.
 }
 \description{
-Provides the contributions of each element that is taken as a divisor in the ALR transformation to the entropy of total information. 
+Provides the contribution of each element that is taken as a divisor in the ALR transformation to the entropy of total information. 
 Code developed from the original code from J.Buxeda i Garrigos.
 Entropy: It includes the value of the entropy of the information (in base logarithms 2) (H2)
 and the relative value that this entropy has with respect to the maximum that can reach for the number of dimensions (elements) that are take into account (H2%).

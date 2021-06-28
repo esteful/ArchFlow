@@ -4,18 +4,30 @@
 \alias{arch_scatter_matrix}
 \title{Scatter Matrix.}
 \usage{
-arch_scatter_matrix(df_raw, vars, color, shape = color, title)
+arch_scatter_matrix(
+  df_raw,
+  vars,
+  title,
+  color,
+  color_title = "Color Title",
+  shape = color,
+  shape_title = "Shape title"
+)
 }
 \arguments{
 \item{df_raw}{Dataframe with the chemical composition and the catagorical values}
 
 \item{vars}{Variables to use in the scatter matrix (chemical elements or compounds)}
 
+\item{title}{The title to be displayed}
+
 \item{color}{Categorical values to be distinguided by colors (e.g. "Region", "Kiln", "Provenance"...)}
+
+\item{color_title}{The title to be displayed}
 
 \item{shape}{Categorical values to be distinguided by shapes (e.g. "Region", "Kiln", "Provenance"...)}
 
-\item{title}{The title to be displayed}
+\item{shape_title}{The title to be displayed}
 }
 \value{
 A facet grid scatter matrix showing correlations among selected variables.

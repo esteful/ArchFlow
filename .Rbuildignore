@@ -1,2 +1,9 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^CONDUCT\.md$
+^\.travis\.yml$
+^README-.*\.Rmd$
+^README-.*\.html$
+^README-.*\.pdf$
+^README-.*\.emf$
+^cran-comments\.md$

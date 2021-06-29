@@ -63,20 +63,20 @@ arch_scatter_matrix <- function(df_raw, vars,title, color, color_title ="Color T
 
 
   plot <-
-   ggplot2::ggplot(.all, aes(x = x, y = y, colour = z, shape = w)) + #here are set the color (z) categories and the shape (w)
-    facet_grid(xvar ~ yvar, scales = "free") +
-    geom_point(aes(colour=z), na.rm = TRUE, alpha=0.8)+
-    geom_point(size=0.5) + ##change the point size here
-    geom_line(aes(x = x, y = y), data = .densities, colour = "grey") +
-    scale_y_continuous(expand = c(0.01, 0)) +
+   ggplot2::ggplot(.all, ggplot2::aes(x = x, y = y, colour = z, shape = w)) + #here are set the color (z) categories and the shape (w)
+    ggplot2::facet_grid(xvar ~ yvar, scales = "free") +
+    ggplot2::geom_point(ggplot2::aes(colour=z), na.rm = TRUE, alpha=0.8)+
+    ggplot2::geom_point(size=0.5) + ##change the point size here
+    ggplot2::geom_line(aes(x = x, y = y), data = .densities, colour = "grey") +
+    ggplot2::scale_y_continuous(expand = c(0.01, 0)) +
 
-    xlab(NULL) +
-    ylab(NULL) +
+    ggplot2::xlab(NULL) +
+    ggplot2::ylab(NULL) +
 
-    labs(colour = color_title, shape = shape_title) +
-    labs(title = title) +
+    ggplot2::labs(colour = color_title, shape = shape_title) +
+    ggplot2::labs(title = title) +
     ggthemes::theme_base(base_size = 10, base_family = "sans") +
-    theme(legend.position = "right")
+    ggplot2::theme(legend.position = "right")
 
     plot(plot)
 

@@ -1,6 +1,6 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "ArchFlow"
+author: "Estefania Calparsoro"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -75,9 +75,10 @@ library("ArchFlow")
 if(!require(archdata)) install.packages("archdata",repos = "http://cran.us.r-project.org")
 library("archdata")
 ```
+
 ```{r}
   data(RBPottery)
-  print(RBPottery)
+  knitr::kable(RBPottery)
 ```
 
 
@@ -212,7 +213,6 @@ if (!"SiO2" %in% colnames(df_chem) == TRUE)  {
 
       }
       
-print("SiO2 column has been created by estimation")
 cbind(df_raw[,c(1:3)], df_chem) -> df_raw
 
 }

@@ -1,5 +1,4 @@
 ## Package dependencies
-#'
 #' @import archdata
 #' @import devtools
 #' @import dplyr

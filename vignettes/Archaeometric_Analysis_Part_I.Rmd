@@ -189,7 +189,7 @@ arch_PCA(df_chem, df_raw =df_raw, printPCA= FALSE, labels = FALSE, nplot = c(2,3
 
 ###Heatmap (table with the concentrations)
 ```{r}
-arch_heatmap(df_chem)
+#arch_heatmap(df_chem)
 ```
 
 

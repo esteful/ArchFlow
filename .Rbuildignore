@@ -7,3 +7,4 @@
 ^README-.*\.pdf$
 ^README-.*\.emf$
 ^cran-comments\.md$
+^data-raw$

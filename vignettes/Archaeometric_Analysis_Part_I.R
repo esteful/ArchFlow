@@ -70,7 +70,7 @@ arch_dendro(df_chem = df_chem, df_raw = df_raw, printDendro = FALSE, nplot=c(2,3
 arch_PCA(df_chem, df_raw =df_raw, printPCA= FALSE, labels = FALSE, nplot = c(2,3), shape_cat_number = 2)
 
 ## -----------------------------------------------------------------------------
-arch_heatmap(df_chem)
+#arch_heatmap(df_chem)
 
 ## -----------------------------------------------------------------------------
 SiO2 <- 0

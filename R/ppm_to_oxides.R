@@ -1,12 +1,11 @@
-#' Conversion from ppm of elemental form to oxides wt% values
+#' Conversion from ppm of elemental form to oxides wt\% values
 
 #' @param df_chem A dataframe with chemical data in ppm
+#'
 #' @param round A number of digits to use in the rounding
-
-
-#' @return A \code{dataframe} with the oxide %wt values converted (only for major elements)
+#'
+#' @return A \code{dataframe} with the oxide \%wt values converted (only for major elements)
 #' @export
-#' @usage  ppm_to_oxides(df_chem) -> df_chem_ox
 #'
 
 

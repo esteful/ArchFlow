@@ -2,9 +2,9 @@
 % Please edit documentation in R/ppm_to_oxides.R
 \name{ppm_to_oxides}
 \alias{ppm_to_oxides}
-\title{Conversion from ppm of elemental form to oxides wt% values}
+\title{Conversion from ppm of elemental form to oxides wt\% values}
 \usage{
-ppm_to_oxides(df_chem) -> df_chem_ox
+ppm_to_oxides(df_chem, round = 2)
 }
 \arguments{
 \item{df_chem}{A dataframe with chemical data in ppm}
@@ -12,8 +12,8 @@ ppm_to_oxides(df_chem) -> df_chem_ox
 \item{round}{A number of digits to use in the rounding}
 }
 \value{
-A \code{dataframe} with the oxide %wt values converted (only for major elements)
+A \code{dataframe} with the oxide \%wt values converted (only for major elements)
 }
 \description{
-Conversion from ppm of elemental form to oxides wt% values
+Conversion from ppm of elemental form to oxides wt\% values
 }

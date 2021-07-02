@@ -1,4 +1,4 @@
-# This goes in R/data.R
+#' R/df_majolica.R
 #' @title Majolica Pottery
 #' @description Compositional data of Majolica pottery
 #' @format A \code{dataframe} with 241 observations and 43 variables
@@ -17,8 +17,8 @@
 #'    \item{Chemical Composition}{}
 #'}
 #' @source \url{10.1016/j.jas.2007.04.007}
-NULL
-
+#' @author JJB
+"df_majolica"
 
 
 
